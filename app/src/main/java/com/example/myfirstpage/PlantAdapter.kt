@@ -6,16 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfirstpage.databinding.PlantItemBinding
 
-class PlantAdapter(val listener:Listener): RecyclerView.Adapter<PlantAdapter.PlantHolder>() {
+class PlantAdapter(val listener:Listener): RecyclerView.Adapter<PlantAdapter.PlantHolder>(){
 
     val plantList = ArrayList<Plant>()
 
     class PlantHolder(item: View):RecyclerView.ViewHolder(item) {
         val binding = PlantItemBinding.bind(item)
         fun bind(plant: Plant,listener: Listener)= with(binding){
-            im.setImageResource(plant.imageId)
             tvTitle.text=plant.title
-            itemView.setOnClickListener(){
+            itemView.setOnClickListener{
                 listener.onClick(plant)
             }
         }

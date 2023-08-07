@@ -2,7 +2,6 @@ package com.example.myfirstpage.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.myfirstpage.Plant
 import com.example.myfirstpage.databinding.ActivityInfoBinding
 
 class InfoActivity : AppCompatActivity() {
@@ -15,10 +14,11 @@ class InfoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val item = intent.getSerializableExtra("item") as Plant
+        val plantId = intent.getIntExtra("item",-1)
+        if (plantId==-1) error("plantId is null")
 
         binding.apply {
-            title.text = item.title
+            title.text ="Plant $plantId"
             but.alpha=0f
             Cv.alpha=0f
 

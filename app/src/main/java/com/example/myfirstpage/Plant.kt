@@ -1,8 +1,7 @@
 package com.example.myfirstpage
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class  Plant(val title: String): Serializable {
-
-
-}
+@Parcelize
+data class Plant(val id: Int, val title: String) : Parcelable

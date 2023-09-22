@@ -10,11 +10,11 @@ import com.example.myfirstpage.databinding.PlantItemBinding
 class PlantAdapter(private val listener: Listener) :
     RecyclerView.Adapter<PlantAdapter.PlantHolder>() {
 
-    var plantList = ArrayList<Plant>()
+    var plantList = ArrayList<PlantUI>()
 
     class PlantHolder(item: View) : RecyclerView.ViewHolder(item) {
         val binding = PlantItemBinding.bind(item)
-        fun bind(plant: Plant, listener: Listener) = with(binding) {
+        fun bind(plant: PlantUI, listener: Listener) = with(binding) {
             tvTitle.text = plant.title
             tvId.text = plant.id.toString()
             itemView.setOnClickListener {
@@ -37,7 +37,7 @@ class PlantAdapter(private val listener: Listener) :
     }
 
 
-    fun setPlant(plants: ArrayList<Plant>) {
+    fun setPlant(plants: List<PlantUI>) {
         val result = DiffUtil.calculateDiff(PlantDiffCallback(plantList, plants))
         plantList.clear()
         plantList.addAll(plants)
@@ -46,14 +46,14 @@ class PlantAdapter(private val listener: Listener) :
     }
 
     fun interface Listener {
-        fun onClick(plant: Plant)
+        fun onClick(plant: PlantUI)
     }
 }
 
 
 class PlantDiffCallback(
-    private val oldPlants: List<Plant>,
-    private val newPlants: List<Plant>
+    private val oldPlants: List<PlantUI>,
+    private val newPlants: List<PlantUI>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize() = oldPlants.size

@@ -3,10 +3,9 @@ package com.example.myfirstpage.presentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myfirstpage.Plant
+import com.example.myfirstpage.PlantUI
 import com.example.myfirstpage.PlantAdapter
 import com.example.myfirstpage.databinding.ActivityMainBinding
 
@@ -46,41 +45,24 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter.onDestroy()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        val (list, sort) = presenter.onSave()
-        outState.putString(TAG_SORT, sort.toString())
-        outState.putParcelableArrayList(TAG_LIST, list)
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        savedInstanceState.apply {
-            val sortStr = getString(TAG_SORT)
-            val sort = if (sortStr == "DESC") {
-                Sort.DESC
-            } else {
-                Sort.ASC
-            }
-            val list = getParcelableArrayList<Plant>(TAG_LIST)
-            presenter.onRestore((list to sort) as Pair<ArrayList<Plant>, Sort>)
-        }
-        super.onRestoreInstanceState(savedInstanceState)
-    }
-
-//    override fun onRestoreInstanceState(
-//        savedInstanceState: Bundle?
-//        persistentState: PersistableBundle?
-//    ) {
-//        savedInstanceState?.apply {
-//            val sort = Sort.ASC
-//            val list = getParcelableArray(TAG_LIST) as Array<Plant>
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        val (list, sort) = presenter.onSave()
+//        outState.putString(TAG_SORT, sort.name)
+//        outState.putParcelableArrayList(TAG_LIST, list)
+//        super.onSaveInstanceState(outState)
+//    }
+//
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        savedInstanceState.apply {
+//            val sort = Sort.valueOf(getString(TAG_SORT) ?: error("123123"))
+//            val list = getParcelableArrayList<PlantUI>(TAG_LIST) ?: error("123")
 //            presenter.onRestore(list to sort)
 //        }
-//        super.onRestoreInstanceState(savedInstanceState, persistentState)
+//        super.onRestoreInstanceState(savedInstanceState)
 //    }
 
 
-    override fun showContent(plantList: ArrayList<Plant>) {
+    override fun showContent(plantList: List<PlantUI>) {
         adapter.setPlant(plantList)
         binding.editNum.setText(adapter.itemCount.toString())
     }

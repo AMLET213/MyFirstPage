@@ -1,16 +1,28 @@
 package com.example.myfirstpage.presentation
 
-import com.example.myfirstpage.Plant
 
 class PlantInteractor {
-    private var plantList = ArrayList<Plant>()
-    private var index = 0
-    fun loadContentInteractor(): ArrayList<Plant> {
-        while (index <= 5) {
-            val plant = Plant(index, "Plant $index")
-            plantList.add(plant)
-            index++
-        }
-        return plantList
+
+    private val repository = PlantRepository()
+
+     suspend fun loadContent(): List<PlantEntity.Main> {
+        return repository.getPlants()
     }
+
+    fun addPlant(newPlant:PlantEntity.New) {
+        repository.addPlant(newPlant)
+    }
+
+    fun deletePlant(plantId:Int) {
+        repository.deletePlant(plantId)
+    }
+
+    fun sortAsc(){
+        repository.sortAsc()
+    }
+
+    fun sortDesc(){
+        repository.sortDesc()
+    }
+
 }

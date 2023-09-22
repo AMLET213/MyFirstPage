@@ -1,11 +1,11 @@
 package com.example.myfirstpage.presentation
 
-import com.example.myfirstpage.Plant
+import com.example.myfirstpage.PlantUI
 
 
 class MainPresenterImpl() : MainContract.Presenter {
     private var view: MainContract.View? = null
-    private var plantList = ArrayList<Plant>()
+    private var plantList: List<PlantUI> = emptyList()
     private val interactor = PlantInteractor()
     private var currentSort = Sort.ASC
 
@@ -22,13 +22,13 @@ class MainPresenterImpl() : MainContract.Presenter {
         view = null
     }
 
-    override fun onSave(): Pair<ArrayList<Plant>, Sort> {
+    override fun onSave(): Pair<List<PlantUI>, Sort> {
         return plantList to currentSort
     }
 
-    override fun onRestore(state: Pair<ArrayList<Plant>, Sort>) {
+    override fun onRestore(state: Pair<List<PlantUI>, Sort>) {
         val (list, sort) = state
-        plantList = ArrayList(list.toList())
+        plantList = list
         currentSort = sort
         view?.showContent(plantList)
         view?.showBtnSort(currentSort)
@@ -36,20 +36,26 @@ class MainPresenterImpl() : MainContract.Presenter {
 
 
     private fun loadContent() {
-        plantList = interactor.loadContentInteractor()
+        plantList = interactor.loadContent().map { PlantUI(it.id,it.title) }
 
     }
 
     override fun onClickAdd(editText: String) {
-        val plant = Plant(plantList.size, "new Plant $editText")
-        plantList.add(plant)
-        sort()
-        view?.showContent(plantList)
+        if (editText.isNotEmpty()) {
+                interactor.addPlant(PlantEntity.New(editText))
+                sort()
+                loadContent()
+                view?.showContent(plantList)
+            }
+        else {
+            view?.showError("Поле ввода пустое!")
+        }
     }
 
     override fun onClickDelete(editText: String) {
         if (editText.isNotEmpty() && editText.toInt() < plantList.size) {
-            plantList.removeIf { plant -> plant.id == editText.toInt() }
+            interactor.deletePlant(editText.toInt())
+            loadContent()
             view?.showContent(plantList)
             view?.clearEdit()
         } else {
@@ -64,20 +70,20 @@ class MainPresenterImpl() : MainContract.Presenter {
             Sort.DESC -> Sort.ASC
         }
         sort()
+        loadContent()
         view?.showBtnSort(currentSort)
         view?.showContent(plantList)
     }
 
 
-    override fun onClickPlant(plant: Plant) {
+    override fun onClickPlant(plant: PlantUI) {
         view?.openInfo(plant.id)
     }
 
     private fun sort() {
-        val selector: (Plant) -> Int? = { plant -> plant.id }
         when (currentSort) {
-            Sort.ASC -> plantList.sortBy(selector)
-            Sort.DESC -> plantList.sortByDescending(selector)
+            Sort.ASC -> interactor.sortAsc()
+            Sort.DESC -> interactor.sortDesc()
         }
 
 

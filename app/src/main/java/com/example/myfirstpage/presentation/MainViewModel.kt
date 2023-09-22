@@ -61,7 +61,7 @@ class MainViewModel() : ViewModel() {
                 sort()
                 loadContent()
             } else {
-                _error.value = "Поле ввода пустое!"
+                _error.value = "Поле ввода пустое!!!"
             }
         }
     }

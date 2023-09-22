@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         })
     }
 
-    override fun showBtnSort(currentSort: Sort) {
+    override fun showBtnSort(currentSort: PlantSort) {
         binding.btnSort.text = "Sort $currentSort"
     }
 

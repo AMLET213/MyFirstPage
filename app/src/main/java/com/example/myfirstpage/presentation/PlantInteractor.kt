@@ -5,23 +5,23 @@ class PlantInteractor {
 
     private val repository = PlantRepository()
 
-     suspend fun loadContent(): List<PlantEntity.Main> {
+    suspend fun loadContent(): List<PlantEntity.Main> {
         return repository.getPlants()
     }
 
-    fun addPlant(newPlant:PlantEntity.New) {
+    suspend fun addPlant(newPlant: PlantEntity.New) {
         repository.addPlant(newPlant)
     }
 
-    fun deletePlant(plantId:Int) {
+    suspend fun deletePlant(plantId: Int) {
         repository.deletePlant(plantId)
     }
 
-    fun sortAsc(){
+    suspend fun sortAsc() {
         repository.sortAsc()
     }
 
-    fun sortDesc(){
+    suspend fun sortDesc() {
         repository.sortDesc()
     }
 

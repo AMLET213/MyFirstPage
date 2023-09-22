@@ -14,20 +14,20 @@ class PlantRepository {
         return cache.getPlants().map { PlantEntity.Main(it.id,it.title) }
     }
 
-    fun addPlant(newPlant: PlantEntity.New) {
-//        val id = cache.getPlants().size
-//        cache.savePlant(PlantDto(id,newPlant.title))
+    suspend fun addPlant(newPlant: PlantEntity.New) {
+        val id = cache.getPlants().size
+        cache.savePlant(PlantDto(id,newPlant.title))
     }
 
-    fun deletePlant(plantId:Int){
+    suspend fun deletePlant(plantId:Int){
         cache.removePlant(plantId)
     }
 
-    fun sortAsc(){
+    suspend fun sortAsc(){
         cache.sortAsc()
     }
 
-    fun sortDesc(){
+    suspend fun sortDesc(){
         cache.sortDesc()
     }
 }

@@ -18,19 +18,21 @@ class MainViewModel() : ViewModel() {
     private val _editNum: MutableLiveData<String> = MutableLiveData("")
     val editNum: LiveData<String> = _editNum
 
-    private val _error: MutableLiveData<String> = MutableLiveData()
-    val error: LiveData<String> = _error
+    private val _id: MutableLiveData<Int?> = MutableLiveData()
+    val id: MutableLiveData<Int?> = _id
+
+    private val _error: MutableLiveData<String?> = MutableLiveData()
+    val error: LiveData<String?> = _error
 
     private val interactor = PlantInteractor()
 
-    fun onCreate(view: MainContract.View) {
-        this.view = view
-        if (plantList.isNotEmpty()) {
-            view.showContent(plantList)
-        } else {
+    fun onCreate() {
+//        if (_plantList.value.isNullOrEmpty()) {
+//            view.showContent(plantList)
+//        } else {
             loadContent()
-        }
-        view.showBtnSort(currentSort)
+//        }
+//        view.showBtnSort(_currentSort)
     }
 
     override fun onCleared() {
@@ -38,15 +40,15 @@ class MainViewModel() : ViewModel() {
         _currentSort.value = PlantSort.ASC
     }
 
-    fun onSave(): Pair<List<PlantUI>, PlantSort> {
-        return plantList to currentSort
-    }
-
-    fun onRestore(state: Pair<List<PlantUI>, PlantSort>) {
-        val (list, sort) = state
-        _plantList.value = list
-        _currentSort.value = sort
-    }
+//    fun onSave(): Pair<List<PlantUI>, PlantSort> {
+//        return plantList to currentSort
+//    }
+//
+//    fun onRestore(state: Pair<List<PlantUI>, PlantSort>) {
+//        val (list, sort) = state
+//        _plantList.value = list
+//        _currentSort.value = sort
+//    }
 
     private fun loadContent() {
         viewModelScope.launch {
@@ -62,6 +64,7 @@ class MainViewModel() : ViewModel() {
                 loadContent()
             } else {
                 _error.value = "Поле ввода пустое!!!"
+                _error.value = null
             }
         }
     }
@@ -75,6 +78,7 @@ class MainViewModel() : ViewModel() {
                 _editNum.value = ""
             } else {
                 _error.value = "число вне диапазона 0-${plants.size - 1}"
+                _error.value = null
             }
         }
     }
@@ -91,7 +95,8 @@ class MainViewModel() : ViewModel() {
     }
 
     fun onClickPlant(plant: PlantUI) {
-        view?.openInfo(plant.id)
+        _id.value=plant.id
+        _id.value= null
     }
 
     private fun sort() {

@@ -1,13 +1,19 @@
-package com.example.myfirstpage.presentation
+package com.example.myfirstpage.feature.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfirstpage.PlantUI
+import com.example.myfirstpage.common.LiveEvent
+import com.example.myfirstpage.common.MutableLiveEvent
+import com.example.myfirstpage.feature.domain.PlantEntity
+import com.example.myfirstpage.feature.domain.PlantInteractor
 import kotlinx.coroutines.launch
 
-class MainViewModel() : ViewModel() {
+class MainViewModel(
+    // private val router: Router
+    private val interactor: PlantInteractor
+) : ViewModel() {
 
     private val _plantList: MutableLiveData<List<PlantUI>> = MutableLiveData(emptyList())
     val plantList: LiveData<List<PlantUI>> = _plantList
@@ -18,13 +24,11 @@ class MainViewModel() : ViewModel() {
     private val _editNum: MutableLiveData<String> = MutableLiveData("")
     val editNum: LiveData<String> = _editNum
 
-    private val _id: MutableLiveData<Int?> = MutableLiveData()
-    val id: MutableLiveData<Int?> = _id
+    private val _id: MutableLiveEvent<Int> = MutableLiveEvent()
+    val id: LiveEvent<Int> = _id
 
-    private val _error: MutableLiveData<String?> = MutableLiveData()
-    val error: LiveData<String?> = _error
-
-    private val interactor = PlantInteractor()
+    private val _error: MutableLiveEvent<String> = MutableLiveEvent()
+    val error: LiveEvent<String> = _error
 
     fun onCreate() {
 //        if (_plantList.value.isNullOrEmpty()) {
@@ -63,8 +67,7 @@ class MainViewModel() : ViewModel() {
                 sort()
                 loadContent()
             } else {
-                _error.value = "Поле ввода пустое!!!"
-                _error.value = null
+                _error.postEvent("Поле ввода пустое!!!")
             }
         }
     }
@@ -77,8 +80,7 @@ class MainViewModel() : ViewModel() {
                 loadContent()
                 _editNum.value = ""
             } else {
-                _error.value = "число вне диапазона 0-${plants.size - 1}"
-                _error.value = null
+                _error.postEvent("число вне диапазона 0-${plants.size - 1}")
             }
         }
     }
@@ -95,8 +97,8 @@ class MainViewModel() : ViewModel() {
     }
 
     fun onClickPlant(plant: PlantUI) {
-        _id.value=plant.id
-        _id.value= null
+        // router.forward(InfoActivity::class)
+        _id.postEvent(plant.id)
     }
 
     private fun sort() {

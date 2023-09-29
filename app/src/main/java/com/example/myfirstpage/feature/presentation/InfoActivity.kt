@@ -1,4 +1,4 @@
-package com.example.myfirstpage.presentation
+package com.example.myfirstpage.feature.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

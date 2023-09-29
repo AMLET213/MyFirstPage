@@ -1,17 +1,10 @@
-package com.example.myfirstpage
+package com.example.myfirstpage.feature.presentation
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PlantUI(val id: Int, val title: String) : Parcelable
-
-
-
-
-
-
-
 
 
 

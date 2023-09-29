@@ -1,6 +1,6 @@
-package com.example.myfirstpage.presentation
+package com.example.myfirstpage.feature.data
 
-class NetworkDataSource {
+internal class NetworkDataSource {
 
     private var plantList = mutableListOf<PlantDto>()
     private var index = 0

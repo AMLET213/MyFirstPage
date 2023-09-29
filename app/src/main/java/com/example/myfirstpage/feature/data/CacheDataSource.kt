@@ -1,7 +1,7 @@
-package com.example.myfirstpage.presentation
+package com.example.myfirstpage.feature.data
 
 
-class CacheDataSource {
+internal class CacheDataSource {
 
     private var plantList = mutableListOf<PlantDto>()
 

@@ -1,4 +1,4 @@
-package com.example.myfirstpage.presentation
+package com.example.myfirstpage.feature.domain
 
 sealed interface PlantEntity {
 

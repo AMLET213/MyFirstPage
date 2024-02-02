@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MyFirstPage</string>
     <string name="button_sort">Sort %1$s</string>
+    <string name="plant">Plant %1$d</string>
 </resources>

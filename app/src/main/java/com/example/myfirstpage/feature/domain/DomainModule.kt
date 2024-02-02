@@ -1,8 +1,13 @@
 package com.example.myfirstpage.feature.domain
 
+import dagger.Module
+import dagger.Provides
+
+@Module
 class DomainModule {
 
-    fun plantInteractor(repository: PlantRepository) : PlantInteractor {
+    @Provides
+    fun providePlantInteractor(repository: PlantRepository) : PlantInteractor {
         return PlantInteractorImpl(repository)
     }
 }

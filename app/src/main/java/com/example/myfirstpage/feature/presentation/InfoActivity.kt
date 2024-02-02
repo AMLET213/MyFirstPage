@@ -2,11 +2,12 @@ package com.example.myfirstpage.feature.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.myfirstpage.R
 import com.example.myfirstpage.databinding.ActivityInfoBinding
 
 class InfoActivity : AppCompatActivity() {
 
-    lateinit var binding : ActivityInfoBinding
+    private lateinit var binding : ActivityInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +19,7 @@ class InfoActivity : AppCompatActivity() {
         if (plantId==-1) error("plantId is null")
 
         binding.apply {
-            title.text ="Plant $plantId"
+            title.text = getString(R.string.plant, plantId)
             but.alpha=0f
             Cv.alpha=0f
 
@@ -27,7 +28,7 @@ class InfoActivity : AppCompatActivity() {
             Cv.animate().alpha(1f).translationYBy((50).toFloat()).setStartDelay(300).duration=1000
 
 
-            but.setOnClickListener(){
+            but.setOnClickListener{
                 finish()
             }
         }

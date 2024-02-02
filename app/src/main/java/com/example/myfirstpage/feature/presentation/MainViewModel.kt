@@ -9,9 +9,10 @@ import com.example.myfirstpage.common.MutableLiveEvent
 import com.example.myfirstpage.feature.domain.PlantEntity
 import com.example.myfirstpage.feature.domain.PlantInteractor
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainViewModel(
-    // private val router: Router
+//     private val router: Router
     private val interactor: PlantInteractor
 ) : ViewModel() {
 

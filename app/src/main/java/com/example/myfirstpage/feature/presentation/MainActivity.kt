@@ -7,15 +7,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfirstpage.R
+import com.example.myfirstpage.app.MyApplication
 import com.example.myfirstpage.databinding.ActivityMainBinding
-import com.example.myfirstpage.feature.di.Component
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var vmFactory: MainViewModelFactory
     lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Component.inject(this)
+//        Component.inject(this)
+        (applicationContext as MyApplication).appComponent.inject(this)
+        viewModel = ViewModelProvider(this,vmFactory).get(MainViewModel::class.java)
         super.onCreate(savedInstanceState)
         val adapter = PlantAdapter { plant -> viewModel.onClickPlant(plant) }
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -73,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         // Command(Forward, Back, Replace)
         // Router.navigateTo<InfoActivity>()
         // Router.toInfo()
+
 
         // Navigation (Jetpack Navigation, Cicerone)
         viewModel.id.observe(this) {
